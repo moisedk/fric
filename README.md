@@ -51,32 +51,32 @@ Google Sign-In integration for quick onboarding
 
 ### b. Dashboard:
 
-Total balance
-Monthly income vs. expenses
-Top spending categories
-AI-powered insights (e.g., "You've spent 20% more on dining this month")
+- Total balance
+- Monthly income vs. expenses
+- Top spending categories
+- AI-powered insights (e.g., "You've spent 20% more on dining this month")
 
 ### c. Expense Tracking:
 
-Quick-add expense feature
-Customizable expense categories
-Option to add notes and tags to expenses
+- Quick-add expense feature
+- Customizable expense categories
+- Option to add notes and tags to expenses
 
 ### d. AI-Powered Insights:
 
-Expense categorization suggestions
-Spending trend analysis
-Basic budget recommendations
+- Expense categorization suggestions
+- Spending trend analysis
+- Basic budget recommendations
 
 ### e. Monthly Reports:
 
-Visual breakdown of expenses by category
-Income vs. expense comparison
-Savings rate calculation
-Downloadable PDF report
+- Visual breakdown of expenses by category
+- Income vs. expense comparison
+- Savings rate calculation
+- Downloadable PDF report
 
 
 ## Post-Launch Roadmap:
-User feedback collection and analysis
-Implementation of bank account integration for automatic tracking
-Advanced AI features (e.g., predictive budgeting, investment recommendations)
+- User feedback collection and analysis
+- Implementation of bank account integration for automatic tracking
+- Advanced AI features (e.g., predictive budgeting, investment recommendations)
