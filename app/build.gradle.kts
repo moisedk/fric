@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -40,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -57,7 +60,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.util)
-    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.compose.ui.tooling.preview)
