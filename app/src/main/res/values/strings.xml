@@ -6,5 +6,7 @@
     <string name="home">Home</string>
     <string name="next">Next</string>
     <string name="search">Search</string>
+    <string name="bottom_nav_exp_text">Expenses\n</string>
+    <string name="bottom_nav_budget_text">Budget</string>
 
 </resources>
