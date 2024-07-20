@@ -20,7 +20,7 @@ import com.github.fric.ui.utils.FricNavType
     }
 
 @Composable
-private fun FricOverViewScreen(
+private fun FricNavHost(
     navController: NavHostController,
     contentType: FricContentType,
     fricHomeUIState: FricHomeUIState,
