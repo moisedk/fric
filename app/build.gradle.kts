@@ -43,6 +43,8 @@ dependencies {
 
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+    implementation(libs.androidx.material3.window.size)
+    implementation(libs.androidx.material3.window.size)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
