@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.google.accompanist.adaptive)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.coil.kt.compose)
