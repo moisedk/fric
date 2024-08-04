@@ -1,4 +1,4 @@
-package com.github.fric.ui.utils
+package com.github.fric.utils
 /*
  * This code was adapted from the Android Open Source Project Sample from
  * @link https://github.com/android/compose-samples/blob/main/Reply/app/src/main/java/com/example/reply/ui/ReplyApp.kt
