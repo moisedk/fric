@@ -8,5 +8,9 @@
     <string name="search">Search</string>
     <string name="bottom_nav_exp_text">Expenses\n</string>
     <string name="bottom_nav_budget_text">Budget</string>
+    <string name="navigation_drawer">Navigation Drawer</string>
+    <string name="compose">Compose</string>
+    <string name="close_drawer">Close Drawer\n</string>
+    <string name="overview">Overview</string>
 
 </resources>
