@@ -1,6 +1,6 @@
 package com.github.fric.data
 
-import java.util.Date
+import java.time.LocalDate
 
 data class User (
     val id: Int,
@@ -9,37 +9,43 @@ data class User (
     val email: String,
     val password: String
 )
+{
+    fun getFullName() = "$fName $lName"
+    fun login(email: String, password: String): Boolean {
+        return this.email == email && this.password == password
+    }
+    fun register(email: String, password: String): Boolean {
+        return this.email == email && this.password == password
+    }
+}
+
 data class Expense (
     val id: Int,
-    val userId: Int,
     val amount: Double,
     val category: ExpenseCategory,
-    val date: Date,
+    val date: LocalDate,
     val description: String,
     val isRecurring: Boolean = false
 )
 data class ExpenseCategory (
     val id: Int,
-    val userId: Int,
     val name: String,
-    val budgetAssigned: Double,
-    val budgetSpent: Double
+    val description: String
 )
 data class Budget (
     val id: Int,
-    val userId: Int,
-    val categoryId: Int,
-    val name: String,
-    val amount: Double,
-    val startDate: Date,
-    val endDate: Date,
+    val description: String,
+    val categoryId: ExpenseCategory,
+    val amountAssigned: Double,
+    val amountSpent: Double,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
 )
 data class ExpenseReport (
-    val id: Int,
-    val userId: Int,
-    val from: Date,
-    val to: Date,
+    val from: LocalDate,
+    val to: LocalDate,
     val totalBudget: Double,
     val totalSpent: Double,
-    val spendingTrends: Map<String, Double>
+    val expenses: List<Expense>,
+    val budgets: List<Budget>,
     )
