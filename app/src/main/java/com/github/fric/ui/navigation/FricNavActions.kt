@@ -40,17 +40,18 @@ class FricNavActions (private val navController: NavHostController) {
 
 val FRIC_TOP_LEVEL_DESTINATIONS = listOf(
     FricTopLevelDestination(
-        route = FricRoute.OVERVIEW,
-        selectedIcon = Icons.Filled.Dashboard,
-        unselectedIcon = Icons.Outlined.Dashboard,
-        iconTextId = R.string.home
-    ),
-    FricTopLevelDestination(
         route = FricRoute.EXPENSES,
         selectedIcon = Icons.Filled.AccountBalanceWallet,
         unselectedIcon = Icons.Outlined.AccountBalanceWallet,
         iconTextId = R.string.bottom_nav_exp_text
-),
+    ),
+    FricTopLevelDestination(
+        route = FricRoute.OVERVIEW,
+        selectedIcon = Icons.Filled.Dashboard,
+        unselectedIcon = Icons.Outlined.Dashboard,
+        iconTextId = R.string.overview
+    ),
+
     FricTopLevelDestination(
         route = FricRoute.BUDGET,
         selectedIcon = Icons.Filled.AccountTree,
