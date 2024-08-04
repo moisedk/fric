@@ -4,7 +4,7 @@ import com.github.fric.data.Expense
 import com.github.fric.data.User
 import kotlinx.coroutines.flow.Flow
 
-interface ExpensesRepository {
+interface ExpenseRepository {
     fun getAllExpensesForUser(user: User): Flow<List<Expense>>
     fun getExpensesForCategory(categoryId: Int): Flow<List<Expense>>
     fun getExpenseById(id: Int): Flow<Expense?>
