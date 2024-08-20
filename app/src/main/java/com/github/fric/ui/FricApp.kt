@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
 import com.github.fric.data.viewModels.BudgetUiState
+import com.github.fric.data.viewModels.BudgetViewModel
 import com.github.fric.data.viewModels.HomeUIState
 import com.github.fric.ui.components.FricBudgetScreen
 import com.github.fric.ui.navigation.FricNavActions
@@ -39,7 +40,7 @@ private fun NavigationSuiteType.toNavType() = when (this) {
 fun FricApp(
     windowSize: WindowSizeClass,
     fricHomeUIState: HomeUIState,
-    fricBudgetUIState: BudgetUiState,
+    budgetViewModel: BudgetViewModel,
     displayFeatures: List<DisplayFeature>,
     closeRecordScreen: () -> Unit = {},
     navigateToRecord: (Int, FricContentType) -> Unit = { _, _ -> },
@@ -82,7 +83,7 @@ fun FricApp(
                 contentType = contentType,
                 displayFeatures = displayFeatures,
                 homeUIState = fricHomeUIState,
-                fricBudgetUIState = fricBudgetUIState,
+                budgetViewModel = budgetViewModel,
                 fricNavType = navSuiteType.toNavType(),
                 closeRecordScreen = closeRecordScreen,
                 navigateToRecord = navigateToRecord,
@@ -96,7 +97,7 @@ private fun FricNavHost(
     navController: NavHostController,
     contentType: FricContentType,
     homeUIState: HomeUIState,
-    fricBudgetUIState: BudgetUiState,
+    budgetViewModel: BudgetViewModel,
     fricNavType: FricNavType,
     displayFeatures: List<DisplayFeature>,
     closeRecordScreen: () -> Unit,
@@ -133,9 +134,7 @@ private fun FricNavHost(
         composable(FricRoute.BUDGET) {
             // #TODO: Add Budget Screen or placeholder
             FricBudgetScreen(
-                fricUiState = fricBudgetUIState,
-                onExpandBudget = {_, _, ->},
-                onAddBudget = { _, _, _, _, _, _ -> }
+                budgetViewModel = budgetViewModel
             )
         }
     }
