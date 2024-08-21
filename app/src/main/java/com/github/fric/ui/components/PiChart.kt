@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,10 +46,10 @@ fun PieChart(
 @Composable
 fun PieChartScreen() {
     val segments = listOf(
-        PieChartSegment(value = 25f, color = Color.Red),
-        PieChartSegment(value = 15f, color = Color.Green),
-        PieChartSegment(value = 35f, color = Color.Blue),
-        PieChartSegment(value = 25f, color = Color.Magenta)
+        PieChartSegment(value = 25f, color = MaterialTheme.colorScheme.primary),
+        PieChartSegment(value = 15f, color = MaterialTheme.colorScheme.secondary),
+        PieChartSegment(value = 35f, color = MaterialTheme.colorScheme.tertiary),
+        PieChartSegment(value = 25f, color = MaterialTheme.colorScheme.primaryContainer)
     )
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
