@@ -23,7 +23,7 @@ class BudgetViewModel(private val budgetsRepository: BaseBudgetsRepository = Bud
             scope = viewModelScope,
             initialValue = BudgetUiState.Loading,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000))
-    val uiState: StateFlow<BudgetUiState> = _uiState
+    var uiState: StateFlow<BudgetUiState> = _uiState
     fun addBudget(description: String, categoryId: ExpenseCategory, amountAssigned: Double, amountSpent: Double, startDate: LocalDate, endDate: LocalDate) {
         viewModelScope.launch {
             budgetsRepository.setBudget(Budget(
@@ -43,5 +43,5 @@ sealed interface BudgetUiState {
     data object Loading: BudgetUiState
     data class Success(val budgets: List<Budget>): BudgetUiState
     data class Error(val error: Throwable): BudgetUiState
-
+    data object AddingBudget: BudgetUiState
 }
