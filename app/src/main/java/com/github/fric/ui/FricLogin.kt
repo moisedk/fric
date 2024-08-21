@@ -31,17 +31,86 @@ import androidx.compose.ui.unit.dp
 import com.github.fric.R
 
 @Composable
+fun WelcomeScreen(
+    modifier: Modifier = Modifier,
+    onRegisterClick: (username: String, password: String) -> Unit,
+    onForgotPasswordClick: () -> Unit,
+    onLoginClick: (username: String, password: String) -> Unit
+) {
+    var isRegisteringUser by remember { mutableStateOf(false) }
+    if (!isRegisteringUser) {
+        LoginScreen(
+            modifier = modifier,
+            onRegisterClick = { isRegisteringUser = true },
+            onForgotPasswordClick = onForgotPasswordClick,
+            onLoginClick = onLoginClick
+        )
+    } else {
+        RegisterScreen(
+            onRegisterClick = onRegisterClick
+        )
+    }
+
+}
+
+@Composable
+fun RegisterScreen(onRegisterClick: (username: String, password: String) -> Unit) {
+    var username: String by remember { mutableStateOf("") }
+    var password: String by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Username TextField
+        OutlinedTextField(
+            value = username, // Replace with your state variable
+            onValueChange = { username = it.trim() },
+            label = { Text("Username") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 48.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))// Password TextField
+        OutlinedTextField(
+            value = password, // Replace with your state variable
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))// Password TextField
+        // Register Button
+        Button(
+            onClick = { onRegisterClick(username, password) },
+            modifier = Modifier
+                .padding(16.dp),
+            colors = ButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+                disabledContainerColor = Color.Transparent,
+                disabledContentColor = Color.Transparent
+            )
+        ) {
+            Text("Register")
+        }
+
+    }
+}
+
+@Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onRegisterClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
-    onLoginSuccess: () -> Unit,
-    onLoginFailure: () -> Unit,
     onLoginClick: (username: String, password: String) -> Unit
 ) {
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
-
     Box(modifier = modifier.fillMaxSize()) {
         // Background image
         Image(
@@ -70,7 +139,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))// Password TextField
             OutlinedTextField(
                 value = password, // Replace with your state variable
-                onValueChange = { password = it},
+                onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
@@ -92,7 +161,7 @@ fun LoginScreen(
 
             // Login Button
             Button(
-                onClick = { onLoginClick(username, password)},
+                onClick = { onLoginClick(username, password) },
                 colors = ButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -117,7 +186,7 @@ fun LoginScreen(
                 disabledContentColor = Color.Transparent
             )
         ) {
-            Text("Register")
+            Text("Register Here")
         }
     }
 }
@@ -128,8 +197,6 @@ fun LoginScreenPreview() {
     LoginScreen(
         onRegisterClick = {},
         onForgotPasswordClick = {},
-        onLoginSuccess = {},
-        onLoginFailure = {},
-        onLoginClick = {_, _, ->}
+        onLoginClick = { _, _ -> }
     )
 }

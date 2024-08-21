@@ -16,20 +16,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.fric.data.viewModels.BudgetViewModel
 import com.github.fric.data.viewModels.FricHomeViewModel
 import com.github.fric.ui.FricApp
-import com.github.fric.ui.LoginScreen
+import com.github.fric.ui.WelcomeScreen
 import com.github.fric.ui.theme.AppTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainActivity : ComponentActivity() {
     private val homeViewModel: FricHomeViewModel by viewModels()
     private val fricViewModel: BudgetViewModel by viewModels()
+    private lateinit var auth: FirebaseAuth
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        this.auth = Firebase.auth
+
         setContent {
-            var isUserLoggedIn by remember { mutableStateOf(false) }
+            var isUserLoggedIn by remember { mutableStateOf(this.auth.currentUser != null) }
             if (isUserLoggedIn) {
                 AppTheme {
                     val windowSize = calculateWindowSizeClass(this)
@@ -49,17 +55,16 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 }
-            }
-            else {
-                // Login Screen
-                LoginScreen(
-                    onRegisterClick = { /*TODO*/ },
+            } else {
+                WelcomeScreen(
+                    onRegisterClick = { username, password ->
+                        registerUser(username, password) { registerResult ->
+                            isUserLoggedIn = registerResult
+                        }
+                    },
                     onForgotPasswordClick = { /*TODO*/ },
-                    onLoginSuccess = { /*TODO*/},
-                    onLoginFailure = {/*TODO*/},
-                    onLoginClick = {
-                        username, password ->
-                        homeViewModel.login(username, password) { loginResult ->
+                    onLoginClick = { username, password ->
+                        login(username, password) { loginResult ->
                             isUserLoggedIn = loginResult
                         }
                     }
@@ -68,6 +73,24 @@ class MainActivity : ComponentActivity() {
         }
 
         SystemClock.sleep(1000)
+    }
+
+    private fun login(username: String, password: String, onLoginResult: (Boolean) -> Unit) {
+        this.auth.signInWithEmailAndPassword(username, password)
+            .addOnCompleteListener { login ->
+                onLoginResult(login.isSuccessful)
+            }
+    }
+
+    private fun registerUser(
+        username: String,
+        password: String,
+        onRegisterResult: (Boolean) -> Unit
+    ) {
+        this.auth.createUserWithEmailAndPassword(username, password)
+            .addOnCompleteListener { registration ->
+                onRegisterResult(registration.isSuccessful)
+            }
     }
 
 }
