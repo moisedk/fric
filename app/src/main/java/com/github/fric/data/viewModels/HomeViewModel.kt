@@ -33,13 +33,6 @@ class FricHomeViewModel(reportRepository: ExpenseReportRepository = ExpenseRepor
 //        TODO("Not yet implemented")
     }
 
-    fun login(username: String, password: String, onLoginResult: (Boolean) -> Unit) {
-        val auth: FirebaseAuth = Firebase.auth
-        auth.signInWithEmailAndPassword(username, password)
-            .addOnCompleteListener { login ->
-                onLoginResult(login.isSuccessful)
-            }
-    }
 }
 
 
