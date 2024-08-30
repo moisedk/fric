@@ -27,6 +27,7 @@ material3AdaptiveNavigationSuiteAndroid = "1.3.0-beta04"
 material3WindowSizeClassAndroid = "1.2.1"
 firebaseBom = "33.1.2"
 googleService = "4.4.2"
+wheelpicker = "1.1.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,7 +73,7 @@ google-firebase-bom = {group = "com.google.firebase", name = "firebase-bom", ver
 google-firebase-analytics = {group = "com.google.firebase", name = "firebase-analytics" }
 google-firebase-auth-ktx = {group = "com.google.firebase", name = "firebase-auth-ktx"}
 google-firebase-firestore = {group = "com.google.firebase", name = "firebase-firestore"}
-
+github-wheelpicker = {group = "com.github.commandiron", name = "WheelPickerCompose", version.ref = "wheelpicker"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

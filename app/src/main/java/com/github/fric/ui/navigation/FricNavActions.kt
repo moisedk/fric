@@ -13,9 +13,9 @@ import androidx.navigation.NavHostController
 import com.github.fric.R
 
 object FricRoute {
-    const val OVERVIEW = "Overview"
+    const val HOME = "home"
     const val BUDGET = "budget"
-    const val EXPENSES = "expenses"
+    const val GOALS = "expenses"
 }
 
 data class FricTopLevelDestination(
@@ -40,13 +40,13 @@ class FricNavActions (private val navController: NavHostController) {
 
 val FRIC_TOP_LEVEL_DESTINATIONS = listOf(
     FricTopLevelDestination(
-        route = FricRoute.EXPENSES,
+        route = FricRoute.GOALS,
         selectedIcon = Icons.Filled.AccountBalanceWallet,
         unselectedIcon = Icons.Outlined.AccountBalanceWallet,
         iconTextId = R.string.bottom_nav_exp_text
     ),
     FricTopLevelDestination(
-        route = FricRoute.OVERVIEW,
+        route = FricRoute.HOME,
         selectedIcon = Icons.Filled.Dashboard,
         unselectedIcon = Icons.Outlined.Dashboard,
         iconTextId = R.string.overview

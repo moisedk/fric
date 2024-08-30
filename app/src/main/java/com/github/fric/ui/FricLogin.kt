@@ -1,6 +1,7 @@
 package com.github.fric.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.fric.R
+import com.github.fric.ui.theme.AppTheme
 
 @Composable
 fun WelcomeScreen(
@@ -90,7 +92,7 @@ fun RegisterScreen(onRegisterClick: (username: String, password: String) -> Unit
             modifier = Modifier
                 .padding(16.dp),
             colors = ButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.primaryContainer,
                 containerColor = MaterialTheme.colorScheme.onPrimary,
                 disabledContainerColor = Color.Transparent,
                 disabledContentColor = Color.Transparent
@@ -111,14 +113,6 @@ fun LoginScreen(
 ) {
     var username: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
-    Box(modifier = modifier.fillMaxSize()) {
-        // Background image
-        Image(
-            painter = painterResource(id = R.drawable.fric_bg), // Replace with your image
-            contentDescription = "Background",
-            modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -126,6 +120,10 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.fricpie), // Replace with your image
+                contentDescription = "Background", contentScale = ContentScale.Fit
+            )
             // Username TextField
             OutlinedTextField(
                 value = username, // Replace with your state variable
@@ -153,7 +151,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .clickable { onForgotPasswordClick() }
                     .align(Alignment.End),
-                color = Color.Blue,
+                color = MaterialTheme.colorScheme.secondary,
                 style = MaterialTheme.typography.bodyMedium
             )
 
@@ -165,38 +163,40 @@ fun LoginScreen(
                 colors = ButtonColors(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     containerColor = MaterialTheme.colorScheme.primary,
-                    disabledContainerColor = Color.Transparent,
+                    disabledContainerColor = MaterialTheme.colorScheme.tertiary,
                     disabledContentColor = Color.Transparent
                 )
             ) {
                 Text("Login")
             }
-        }
+            Spacer(modifier = Modifier.height(16.dp))
+            // Register Button
+            Text(text = "OR")
+            Button(
+                onClick = { onRegisterClick() },
+                modifier = Modifier
+                    .padding(16.dp),
+                colors = ButtonColors(
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    disabledContentColor = Color.Transparent
+                )
+            ) {
+                Text("Register")
+            }
 
-        // Register Button
-        Button(
-            onClick = { onRegisterClick() },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp),
-            colors = ButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary,
-                containerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
-                disabledContentColor = Color.Transparent
-            )
-        ) {
-            Text("Register Here")
         }
-    }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
+    AppTheme {
     LoginScreen(
         onRegisterClick = {},
         onForgotPasswordClick = {},
         onLoginClick = { _, _ -> }
     )
+    }
 }

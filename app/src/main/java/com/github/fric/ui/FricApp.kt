@@ -15,10 +15,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
-import com.github.fric.data.viewModels.BudgetUiState
 import com.github.fric.data.viewModels.BudgetViewModel
-import com.github.fric.data.viewModels.HomeUIState
+import com.github.fric.data.viewModels.FricHomeViewModel
+import com.github.fric.data.viewModels.GoalViewModel
+import com.github.fric.data.viewModels.HomeUiState
 import com.github.fric.ui.components.FricBudgetScreen
+import com.github.fric.ui.components.FricGoalScreen
 import com.github.fric.ui.navigation.FricNavActions
 import com.github.fric.ui.navigation.FricNavigationWrapper
 import com.github.fric.ui.navigation.FricRoute
@@ -39,8 +41,10 @@ private fun NavigationSuiteType.toNavType() = when (this) {
 @Composable
 fun FricApp(
     windowSize: WindowSizeClass,
-    fricHomeUIState: HomeUIState,
+    fricHomeUIState: HomeUiState,
     budgetViewModel: BudgetViewModel,
+    goalViewModel: GoalViewModel,
+    homeViewModel: FricHomeViewModel,
     displayFeatures: List<DisplayFeature>,
     closeRecordScreen: () -> Unit = {},
     navigateToRecord: (Int, FricContentType) -> Unit = { _, _ -> },
@@ -70,7 +74,7 @@ fun FricApp(
     val navController = rememberNavController()
     val navActions = remember(navController) { FricNavActions(navController) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination?.route ?: FricRoute.OVERVIEW
+    val currentDestination = navBackStackEntry?.destination?.route ?: FricRoute.HOME
 
 
     Surface {
@@ -87,6 +91,8 @@ fun FricApp(
                 fricNavType = navSuiteType.toNavType(),
                 closeRecordScreen = closeRecordScreen,
                 navigateToRecord = navigateToRecord,
+                goalViewModel = goalViewModel,
+                homeViewModel = homeViewModel
             )
         }
     }
@@ -96,8 +102,10 @@ fun FricApp(
 private fun FricNavHost(
     navController: NavHostController,
     contentType: FricContentType,
-    homeUIState: HomeUIState,
+    homeUIState: HomeUiState,
+    homeViewModel: FricHomeViewModel,
     budgetViewModel: BudgetViewModel,
+    goalViewModel: GoalViewModel,
     fricNavType: FricNavType,
     displayFeatures: List<DisplayFeature>,
     closeRecordScreen: () -> Unit,
@@ -106,29 +114,23 @@ private fun FricNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = FricRoute.OVERVIEW,
+        startDestination = FricRoute.HOME,
         modifier = modifier
     ) {
 
-        composable(FricRoute.EXPENSES) {
+        composable(FricRoute.GOALS) {
             // #TODO: Add Expenses Screen or placeholder
-            FricExpensesScreen(
-                contentType = contentType,
-                fricHomeUIState = homeUIState,
-                navigationType = fricNavType,
-                displayFeatures = displayFeatures,
-                closeRecordScreen = closeRecordScreen,
-                navigateToRecord = navigateToRecord
-            )
+            FricGoalScreen(goalViewModel = goalViewModel)
         }
-        composable(FricRoute.OVERVIEW) {
+        composable(FricRoute.HOME) {
             FricOverviewScreen(
                 contentType = contentType,
                 fricHomeUIState = homeUIState,
                 navigationType = fricNavType,
                 displayFeatures = displayFeatures,
                 closeRecordScreen = closeRecordScreen,
-                navigateToRecord = navigateToRecord
+                navigateToRecord = navigateToRecord,
+                homeViewModel = homeViewModel
             )
         }
         composable(FricRoute.BUDGET) {

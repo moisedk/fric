@@ -1,21 +1,25 @@
 package com.github.fric.data.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.fric.data.ExpenseReport
+import com.github.fric.data.repositories.BaseExpenseReportRepository
 import com.github.fric.data.repositories.ExpenseReportRepository
-import com.github.fric.data.repositories.ExpenseReportRepositoryImpl
 import com.github.fric.utils.FricContentType
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.Firebase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
-class FricHomeViewModel(reportRepository: ExpenseReportRepository = ExpenseReportRepositoryImpl()) :
+class FricHomeViewModel(reportRepository: BaseExpenseReportRepository = ExpenseReportRepository) :
     ViewModel() {
-    private val _uiState = MutableStateFlow(HomeUIState())
-    val uiState = _uiState.asStateFlow()
+    private val reports = reportRepository.getExpenseReportsForRange()
+    private val _uiState: StateFlow<HomeUiState> = reports.map { reports -> HomeUiState.Success(reports) }
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = HomeUiState.Loading,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000))
+    var uiState: StateFlow<HomeUiState> = _uiState
 
     init {
         observeReport()
@@ -36,9 +40,8 @@ class FricHomeViewModel(reportRepository: ExpenseReportRepository = ExpenseRepor
 }
 
 
-    data class HomeUIState(
-        val currentReport: ExpenseReport? = null,
-        val isAddingExpense: Boolean = false,
-        val loading: Boolean = false,
-        val error: String? = null
-    )
+sealed interface HomeUiState {
+    data object Loading: HomeUiState
+    data class Success(val reports: List<ExpenseReport>): HomeUiState
+    data class Error(val error: Throwable): HomeUiState
+}

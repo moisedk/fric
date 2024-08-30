@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.fric.data.viewModels.BudgetViewModel
 import com.github.fric.data.viewModels.FricHomeViewModel
+import com.github.fric.data.viewModels.GoalViewModel
 import com.github.fric.ui.FricApp
 import com.github.fric.ui.WelcomeScreen
 import com.github.fric.ui.theme.AppTheme
@@ -26,6 +27,7 @@ import com.google.firebase.auth.auth
 class MainActivity : ComponentActivity() {
     private val homeViewModel: FricHomeViewModel by viewModels()
     private val fricViewModel: BudgetViewModel by viewModels()
+    private val fricGoalViewModel: GoalViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -35,41 +37,42 @@ class MainActivity : ComponentActivity() {
         this.auth = Firebase.auth
 
         setContent {
-            var isUserLoggedIn by remember { mutableStateOf(this.auth.currentUser != null) }
-            if (isUserLoggedIn) {
                 AppTheme {
                     val windowSize = calculateWindowSizeClass(this)
                     val displayFeatures = calculateDisplayFeatures(this)
                     val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
-
+                    var isUserLoggedIn by remember { mutableStateOf(this.auth.currentUser != null) }
+                    if (isUserLoggedIn)
+                    {
                     FricApp(
                         windowSize = windowSize,
                         displayFeatures = displayFeatures,
                         fricHomeUIState = homeUiState,
                         budgetViewModel = fricViewModel,
                         closeRecordScreen = {
-                            homeViewModel.closeRecordScreen()
                         },
                         navigateToRecord = { expenseId, pane ->
-                            homeViewModel.openReportExpenseScreen(expenseId, pane)
+                        },
+                        goalViewModel = fricGoalViewModel,
+                        homeViewModel = homeViewModel
+                    ) }
+                    else {
+                        WelcomeScreen(
+                        onRegisterClick = { username, password ->
+                            registerUser(username, password) { registerResult ->
+                                isUserLoggedIn = registerResult
+                            }
+                        },
+                        onForgotPasswordClick = { /*TODO*/ },
+                        onLoginClick = { username, password ->
+                            login(username, password) { loginResult ->
+                                isUserLoggedIn = loginResult
+                            }
                         }
                     )
                 }
-            } else {
-                WelcomeScreen(
-                    onRegisterClick = { username, password ->
-                        registerUser(username, password) { registerResult ->
-                            isUserLoggedIn = registerResult
-                        }
-                    },
-                    onForgotPasswordClick = { /*TODO*/ },
-                    onLoginClick = { username, password ->
-                        login(username, password) { loginResult ->
-                            isUserLoggedIn = loginResult
-                        }
-                    }
-                )
-            }
+
+                }
         }
 
         SystemClock.sleep(1000)

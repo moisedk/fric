@@ -10,14 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.window.layout.DisplayFeature
-import com.github.fric.data.viewModels.HomeUIState
+import com.github.fric.data.viewModels.HomeUiState
 import com.github.fric.utils.FricContentType
 import com.github.fric.utils.FricNavType
 
 @Composable
 fun FricExpensesScreen(
     contentType: FricContentType,
-    fricHomeUIState: HomeUIState,
+    fricHomeUIState: HomeUiState,
     navigationType: FricNavType,
     displayFeatures: List<DisplayFeature>,
     closeRecordScreen: () -> Unit,

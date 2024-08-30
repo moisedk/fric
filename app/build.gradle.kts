@@ -64,6 +64,9 @@ dependencies {
     implementation(libs.google.firebase.auth.ktx)
     implementation(libs.google.firebase.firestore)
 
+//    WheelPicker
+    implementation(libs.github.wheelpicker)
+
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
