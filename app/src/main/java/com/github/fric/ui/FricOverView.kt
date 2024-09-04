@@ -55,8 +55,6 @@ fun FricOverviewScreen(
     homeViewModel: FricHomeViewModel,
     navigationType: FricNavType,
     displayFeatures: List<DisplayFeature>,
-    closeRecordScreen: () -> Unit,
-    navigateToRecord: (Int, FricContentType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }

@@ -59,7 +59,7 @@ fun ExpenseReportList(
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text(
-            text = "Welcome, Steve",
+            text = "Welcome, Moise",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(16.dp)

@@ -49,10 +49,6 @@ class MainActivity : ComponentActivity() {
                         displayFeatures = displayFeatures,
                         fricHomeUIState = homeUiState,
                         budgetViewModel = fricViewModel,
-                        closeRecordScreen = {
-                        },
-                        navigateToRecord = { expenseId, pane ->
-                        },
                         goalViewModel = fricGoalViewModel,
                         homeViewModel = homeViewModel
                     ) }

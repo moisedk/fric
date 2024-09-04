@@ -46,8 +46,6 @@ fun FricApp(
     goalViewModel: GoalViewModel,
     homeViewModel: FricHomeViewModel,
     displayFeatures: List<DisplayFeature>,
-    closeRecordScreen: () -> Unit = {},
-    navigateToRecord: (Int, FricContentType) -> Unit = { _, _ -> },
 ) {
     val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
 
@@ -89,8 +87,6 @@ fun FricApp(
                 homeUIState = fricHomeUIState,
                 budgetViewModel = budgetViewModel,
                 fricNavType = navSuiteType.toNavType(),
-                closeRecordScreen = closeRecordScreen,
-                navigateToRecord = navigateToRecord,
                 goalViewModel = goalViewModel,
                 homeViewModel = homeViewModel
             )
@@ -108,8 +104,6 @@ private fun FricNavHost(
     goalViewModel: GoalViewModel,
     fricNavType: FricNavType,
     displayFeatures: List<DisplayFeature>,
-    closeRecordScreen: () -> Unit,
-    navigateToRecord: (Int, FricContentType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -119,7 +113,7 @@ private fun FricNavHost(
     ) {
 
         composable(FricRoute.GOALS) {
-            // #TODO: Add Expenses Screen or placeholder
+            // #TODO: Add Goal Screen or placeholder
             FricGoalScreen(goalViewModel = goalViewModel)
         }
         composable(FricRoute.HOME) {
@@ -128,8 +122,6 @@ private fun FricNavHost(
                 fricHomeUIState = homeUIState,
                 navigationType = fricNavType,
                 displayFeatures = displayFeatures,
-                closeRecordScreen = closeRecordScreen,
-                navigateToRecord = navigateToRecord,
                 homeViewModel = homeViewModel
             )
         }
